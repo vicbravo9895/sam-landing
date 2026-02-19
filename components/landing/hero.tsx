@@ -21,7 +21,7 @@ import {
   TrendingDown,
 } from "lucide-react"
 import Link from "next/link"
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState } from "react"
 
 export function Hero() {
   const [isVisible, setIsVisible] = useState(false)
