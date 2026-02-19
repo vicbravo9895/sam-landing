@@ -71,13 +71,20 @@ export function Hero() {
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Link href="/demo">
-                <Button size="lg" className="bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:opacity-90 transition-all hover:scale-[1.02] gap-2 px-8">
+              <Link href="/demo" className="w-full sm:w-auto">
+                <Button size="lg" className="w-full sm:w-auto bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:opacity-90 transition-all hover:scale-[1.02] gap-2 px-8 h-12">
                   Solicitar Demo
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
-              <Button size="lg" variant="outline" className="gap-2 bg-transparent hover:bg-muted/50 transition-all">
+              <Button
+                size="lg"
+                variant="outline"
+                className="w-full sm:w-auto gap-2 bg-transparent hover:bg-muted/50 transition-all px-8 h-12"
+                onClick={() => {
+                  document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" })
+                }}
+              >
                 <Play className="w-4 h-4" />
                 Ver como funciona
               </Button>
