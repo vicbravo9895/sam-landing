@@ -16,20 +16,40 @@ import { Textarea } from "@/components/ui/textarea"
 import { ArrowLeft, ArrowRight, CheckCircle2, Shield, Zap, Clock } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { submitDeal } from "@/app/actions/deals"
 
 export default function DemoPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [errorMsg, setErrorMsg] = useState<string | null>(null)
+  const [fleetSize, setFleetSize] = useState("")
+  const [country, setCountry] = useState("")
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsSubmitting(true)
-    
-    // Simular envío
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    
-    setIsSubmitting(false)
-    setIsSubmitted(true)
+    setErrorMsg(null)
+
+    const form = e.currentTarget
+    const formData = new FormData(form)
+    formData.set("fleet_size", fleetSize)
+    formData.set("country", country)
+
+    try {
+      const result = await submitDeal(formData)
+
+      if (!result.success) {
+        setErrorMsg(result.error)
+        setIsSubmitting(false)
+        return
+      }
+
+      setIsSubmitting(false)
+      setIsSubmitted(true)
+    } catch {
+      setErrorMsg("Ocurrió un error inesperado. Intenta de nuevo.")
+      setIsSubmitting(false)
+    }
   }
 
   const benefits = [
@@ -164,7 +184,8 @@ export default function DemoPage() {
                 <div className="space-y-2">
                   <Label htmlFor="nombre">Nombre *</Label>
                   <Input 
-                    id="nombre" 
+                    id="nombre"
+                    name="first_name"
                     placeholder="Tu nombre" 
                     required 
                     className="bg-background"
@@ -173,7 +194,8 @@ export default function DemoPage() {
                 <div className="space-y-2">
                   <Label htmlFor="apellido">Apellido *</Label>
                   <Input 
-                    id="apellido" 
+                    id="apellido"
+                    name="last_name"
                     placeholder="Tu apellido" 
                     required
                     className="bg-background"
@@ -184,7 +206,8 @@ export default function DemoPage() {
               <div className="space-y-2">
                 <Label htmlFor="email">Correo electrónico *</Label>
                 <Input 
-                  id="email" 
+                  id="email"
+                  name="email"
                   type="email" 
                   placeholder="tu@empresa.com" 
                   required
@@ -195,7 +218,8 @@ export default function DemoPage() {
               <div className="space-y-2">
                 <Label htmlFor="telefono">Teléfono *</Label>
                 <Input 
-                  id="telefono" 
+                  id="telefono"
+                  name="phone"
                   type="tel" 
                   placeholder="+52 55 1234 5678" 
                   required
@@ -206,7 +230,8 @@ export default function DemoPage() {
               <div className="space-y-2">
                 <Label htmlFor="empresa">Empresa *</Label>
                 <Input 
-                  id="empresa" 
+                  id="empresa"
+                  name="company_name"
                   placeholder="Nombre de tu empresa" 
                   required
                   className="bg-background"
@@ -216,7 +241,8 @@ export default function DemoPage() {
               <div className="space-y-2">
                 <Label htmlFor="cargo">Cargo</Label>
                 <Input 
-                  id="cargo" 
+                  id="cargo"
+                  name="position"
                   placeholder="Tu cargo en la empresa"
                   className="bg-background"
                 />
@@ -224,7 +250,7 @@ export default function DemoPage() {
 
               <div className="space-y-2">
                 <Label htmlFor="flota">Tamaño de la flota *</Label>
-                <Select required>
+                <Select required value={fleetSize} onValueChange={setFleetSize}>
                   <SelectTrigger className="bg-background">
                     <SelectValue placeholder="Selecciona una opción" />
                   </SelectTrigger>
@@ -240,18 +266,18 @@ export default function DemoPage() {
 
               <div className="space-y-2">
                 <Label htmlFor="pais">País *</Label>
-                <Select required>
+                <Select required value={country} onValueChange={setCountry}>
                   <SelectTrigger className="bg-background">
                     <SelectValue placeholder="Selecciona tu país" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="mx">México</SelectItem>
-                    <SelectItem value="co">Colombia</SelectItem>
-                    <SelectItem value="cl">Chile</SelectItem>
-                    <SelectItem value="ar">Argentina</SelectItem>
-                    <SelectItem value="pe">Perú</SelectItem>
-                    <SelectItem value="ec">Ecuador</SelectItem>
-                    <SelectItem value="otro">Otro</SelectItem>
+                    <SelectItem value="México">México</SelectItem>
+                    <SelectItem value="Colombia">Colombia</SelectItem>
+                    <SelectItem value="Chile">Chile</SelectItem>
+                    <SelectItem value="Argentina">Argentina</SelectItem>
+                    <SelectItem value="Perú">Perú</SelectItem>
+                    <SelectItem value="Ecuador">Ecuador</SelectItem>
+                    <SelectItem value="Otro">Otro</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -259,11 +285,16 @@ export default function DemoPage() {
               <div className="space-y-2">
                 <Label htmlFor="mensaje">¿Qué desafíos enfrentas actualmente?</Label>
                 <Textarea 
-                  id="mensaje" 
+                  id="mensaje"
+                  name="challenges"
                   placeholder="Cuéntanos brevemente sobre tus principales retos con el monitoreo de tu flota..."
                   className="bg-background min-h-[100px] resize-none"
                 />
               </div>
+
+              {errorMsg && (
+                <p className="text-sm text-destructive text-center">{errorMsg}</p>
+              )}
 
               <Button 
                 type="submit" 
