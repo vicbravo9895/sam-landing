@@ -5,7 +5,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sammonitoreo.com"
 export const metadata: Metadata = {
   title: "Solicitar Demo",
   description:
-    "Agenda una demo personalizada de SAM. Descubre como el monitoreo inteligente puede reducir las falsas alarmas de tu flota en un 80% y proteger a tus conductores.",
+    "Agenda una demo personalizada de SAM. Descubre cómo el monitoreo inteligente puede reducir las falsas alarmas de tu flota en un 80% y proteger a tus conductores.",
   alternates: {
     canonical: `${siteUrl}/demo`,
   },
@@ -24,10 +24,27 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Solicitar Demo | SAM - Monitoreo Inteligente de Flotas",
+    description:
+      "Agenda una demo personalizada. Te mostramos SAM funcionando con casos reales de tu industria.",
+    images: [`${siteUrl}/og-image.jpg`],
+    creator: "@sammonitoreo",
+  },
   robots: {
     index: true,
     follow: true,
   },
+}
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Inicio", item: siteUrl },
+    { "@type": "ListItem", position: 2, name: "Solicitar Demo", item: `${siteUrl}/demo` },
+  ],
 }
 
 export default function DemoLayout({
@@ -35,5 +52,13 @@ export default function DemoLayout({
 }: {
   children: React.ReactNode
 }) {
-  return children
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      {children}
+    </>
+  )
 }

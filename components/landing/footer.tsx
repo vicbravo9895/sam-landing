@@ -12,12 +12,12 @@ export function Footer() {
       { label: "Ejemplos", href: "#use-cases" },
     ],
     empresa: [
-      { label: "Sobre Nosotros", href: "#about" },
-      { label: "Contacto", href: "#contact" },
+      { label: "Sobre Nosotros", href: "#for-who" },
+      { label: "Contacto", href: "/demo" },
     ],
     legal: [
-      { label: "Terminos de Servicio", href: "#terms" },
-      { label: "Politica de Privacidad", href: "#privacy" },
+      { label: "Términos de Servicio", href: "/terms" },
+      { label: "Política de Privacidad", href: "/privacy" },
     ],
   }
 

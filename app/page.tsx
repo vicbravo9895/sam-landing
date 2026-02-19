@@ -12,26 +12,41 @@ import { Footer } from "@/components/landing/footer"
 function JsonLd() {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sammonitoreo.com"
 
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "SAM - Monitoreo Inteligente de Flotas",
+    url: siteUrl,
+    inLanguage: "es",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${siteUrl}/?q={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
+  }
+
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "SAM - Sistema Automatizado de Monitoreo",
+    alternateName: "SAM Global Technologies",
     url: siteUrl,
     logo: `${siteUrl}/images/image.jpeg`,
+    image: `${siteUrl}/og-image.jpg`,
     description:
-      "SAM analiza automaticamente las alertas de tu flota con inteligencia artificial. Filtra el ruido, detecta emergencias reales y te notifica solo cuando importa.",
+      "SAM analiza automáticamente las alertas de tu flota con inteligencia artificial. Filtra el ruido, detecta emergencias reales y te notifica solo cuando importa.",
     contactPoint: {
       "@type": "ContactPoint",
       email: "contacto@samglobaltechnologies.com",
       contactType: "sales",
       availableLanguage: ["Spanish"],
+      areaServed: ["MX", "CO", "CL"],
     },
     address: {
       "@type": "PostalAddress",
-      addressRegion: "Nuevo Leon",
+      addressRegion: "Nuevo León",
       addressCountry: "MX",
     },
-    sameAs: [],
   }
 
   const softwareSchema = {
@@ -39,19 +54,22 @@ function JsonLd() {
     "@type": "SoftwareApplication",
     name: "SAM - Monitoreo Inteligente de Flotas",
     applicationCategory: "BusinessApplication",
+    applicationSubCategory: "Fleet Management",
     operatingSystem: "Web",
+    inLanguage: "es",
     description:
       "Sistema automatizado de monitoreo de flotas que analiza alertas con inteligencia artificial, filtra falsas alarmas y notifica emergencias reales en segundos.",
     offers: {
       "@type": "Offer",
       category: "SaaS",
       availability: "https://schema.org/OnlineOnly",
+      priceCurrency: "USD",
     },
     featureList: [
-      "Analisis automatico de alertas",
-      "Deteccion de emergencias reales",
+      "Análisis automático de alertas",
+      "Detección de emergencias reales",
       "Notificaciones por llamada, WhatsApp y SMS",
-      "Analisis de imagenes de dashcam",
+      "Análisis de imágenes de dashcam",
       "Monitoreo continuo 24/7",
       "Compatible con Samsara",
       "Panel de control en tiempo real",
@@ -66,42 +84,42 @@ function JsonLd() {
     mainEntity: [
       {
         "@type": "Question",
-        name: "Que es SAM y como funciona?",
+        name: "¿Qué es SAM y cómo funciona?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "SAM es un sistema automatizado de monitoreo que se conecta a tus dispositivos Samsara y analiza cada alerta con inteligencia artificial. Revisa ubicacion, conductor y camaras, filtra las falsas alarmas y te notifica solo cuando hay una emergencia real.",
+          text: "SAM es un sistema automatizado de monitoreo que se conecta a tus dispositivos Samsara y analiza cada alerta con inteligencia artificial. Revisa ubicación, conductor y cámaras, filtra las falsas alarmas y te notifica solo cuando hay una emergencia real.",
         },
       },
       {
         "@type": "Question",
-        name: "Cuanto reduce SAM las falsas alarmas?",
+        name: "¿Cuánto reduce SAM las falsas alarmas?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "SAM reduce las alertas irrelevantes en un 80%, permitiendo que tu equipo se enfoque unicamente en las situaciones que realmente requieren atencion.",
+          text: "SAM reduce las alertas irrelevantes en un 80%, permitiendo que tu equipo se enfoque únicamente en las situaciones que realmente requieren atención.",
         },
       },
       {
         "@type": "Question",
-        name: "Que tipo de alertas puede analizar SAM?",
+        name: "¿Qué tipo de alertas puede analizar SAM?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "SAM analiza botones de emergencia, conductores distraidos, colisiones y frenados bruscos, camaras bloqueadas, exceso de velocidad y mas. Cubre los eventos de seguridad mas criticos para una flota.",
+          text: "SAM analiza botones de emergencia, conductores distraídos, colisiones y frenados bruscos, cámaras bloqueadas, exceso de velocidad y más. Cubre los eventos de seguridad más críticos para una flota.",
         },
       },
       {
         "@type": "Question",
-        name: "SAM funciona con Samsara?",
+        name: "¿SAM funciona con Samsara?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Si, SAM esta disenado para integrarse directamente con dispositivos y alertas de Samsara. La conexion es rapida y no requiere instalaciones complicadas.",
+          text: "Sí, SAM está diseñado para integrarse directamente con dispositivos y alertas de Samsara. La conexión es rápida y no requiere instalaciones complicadas.",
         },
       },
       {
         "@type": "Question",
-        name: "Como me notifica SAM cuando hay una emergencia?",
+        name: "¿Cómo me notifica SAM cuando hay una emergencia?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "SAM te notifica por tres canales segun la urgencia: llamada telefonica para emergencias criticas, WhatsApp para alertas importantes y SMS como respaldo.",
+          text: "SAM te notifica por tres canales según la urgencia: llamada telefónica para emergencias críticas, WhatsApp para alertas importantes y SMS como respaldo.",
         },
       },
     ],
@@ -122,6 +140,10 @@ function JsonLd() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}

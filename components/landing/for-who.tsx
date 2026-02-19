@@ -46,7 +46,7 @@ export function ForWho() {
   ]
 
   return (
-    <section ref={sectionRef} className="py-24 lg:py-40 relative overflow-hidden">
+    <section ref={sectionRef} id="for-who" aria-label="Para quién es SAM" className="py-24 lg:py-40 relative overflow-hidden">
       <div className="absolute inset-0 -z-10">
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/[0.03] rounded-full blur-3xl" />
       </div>

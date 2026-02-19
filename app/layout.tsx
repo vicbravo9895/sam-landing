@@ -54,10 +54,8 @@ export const metadata: Metadata = {
   alternates: {
     canonical: siteUrl,
     languages: {
-      "es-MX": siteUrl,
-      "es-CO": siteUrl,
-      "es-CL": siteUrl,
-      "es-419": siteUrl,
+      "x-default": siteUrl,
+      "es": siteUrl,
     },
   },
   openGraph: {
@@ -106,7 +104,7 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
     apple: "/apple-icon.png",
   },
-    generator: 'v0.app'
+  manifest: "/manifest.json",
 }
 
 export const viewport: Viewport = {

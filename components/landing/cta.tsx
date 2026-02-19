@@ -29,7 +29,7 @@ export function CTA() {
   ]
 
   return (
-    <section ref={sectionRef} className="py-24 lg:py-40">
+    <section ref={sectionRef} id="cta" aria-label="Solicitar una demo" className="py-24 lg:py-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className={`relative rounded-[2rem] overflow-hidden transition-all duration-700 ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
           {/* Background */}
