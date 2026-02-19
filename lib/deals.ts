@@ -29,9 +29,28 @@ export async function processDeal(data: unknown): Promise<DealResult> {
     }
   }
 
-  // TODO: persist the deal — database, CRM, email notification, etc.
-  // For now we just log it so you can wire your own backend later.
-  console.log("[Deal received]", JSON.stringify(parsed.data, null, 2))
+  const serviceUrl = process.env.DEALS_SERVICE_URL
+  if (!serviceUrl) {
+    console.log("[Deal received]", JSON.stringify(parsed.data, null, 2))
+    return { success: true, message: "Deal created successfully" }
+  }
+
+  const serviceToken = process.env.DEALS_SERVICE_TOKEN
+  const headers: Record<string, string> = { "Content-Type": "application/json" }
+  if (serviceToken) {
+    headers["Authorization"] = `Bearer ${serviceToken}`
+  }
+
+  const res = await fetch(serviceUrl, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(parsed.data),
+  })
+
+  if (!res.ok) {
+    console.error("[Deal forward failed]", res.status, await res.text())
+    return { success: false, error: "Failed to forward deal to service" }
+  }
 
   return { success: true, message: "Deal created successfully" }
 }
