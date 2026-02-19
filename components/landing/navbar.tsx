@@ -65,13 +65,11 @@ export function Navbar() {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-3">
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="text-muted-foreground hover:text-foreground"
-            >
-              Iniciar Sesión
-            </Button>
+            <Link href="https://cloud.samglobaltechnologies.com">
+              <Button size="sm" className="bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:opacity-90 transition-all hover:shadow-lg hover:shadow-primary/25 px-5">
+                Iniciar Sesión
+              </Button>
+            </Link>
             <Link href="/demo">
               <Button 
                 size="sm" 
