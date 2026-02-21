@@ -1,42 +1,18 @@
-import dynamic from "next/dynamic"
 import { Navbar } from "@/components/landing/navbar"
 import { Hero } from "@/components/landing/hero"
 import { Footer } from "@/components/landing/footer"
-
-const ProblemSolution = dynamic(
-  () => import("@/components/landing/problem-solution").then((m) => ({ default: m.ProblemSolution })),
-  { ssr: true }
-)
-const Features = dynamic(
-  () => import("@/components/landing/features").then((m) => ({ default: m.Features })),
-  { ssr: true }
-)
-const HowItWorks = dynamic(
-  () => import("@/components/landing/how-it-works").then((m) => ({ default: m.HowItWorks })),
-  { ssr: true }
-)
-const Benefits = dynamic(
-  () => import("@/components/landing/benefits").then((m) => ({ default: m.Benefits })),
-  { ssr: true }
-)
-const UseCases = dynamic(
-  () => import("@/components/landing/use-cases").then((m) => ({ default: m.UseCases })),
-  { ssr: true }
-)
-const ForWho = dynamic(
-  () => import("@/components/landing/for-who").then((m) => ({ default: m.ForWho })),
-  { ssr: true }
-)
-const CTA = dynamic(
-  () => import("@/components/landing/cta").then((m) => ({ default: m.CTA })),
-  { ssr: true }
-)
+import { ProblemSolution } from "@/components/landing/problem-solution"
+import { Features } from "@/components/landing/features"
+import { HowItWorks } from "@/components/landing/how-it-works"
+import { Benefits } from "@/components/landing/benefits"
+import { UseCases } from "@/components/landing/use-cases"
+import { ForWho } from "@/components/landing/for-who"
+import { CTA } from "@/components/landing/cta"
 
 function JsonLd() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sammonitoreo.com"
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://samglobaltechnologies.com"
 
   const websiteSchema = {
-    "@context": "https://schema.org",
     "@type": "WebSite",
     name: "SAM - Monitoreo Inteligente de Flotas",
     url: siteUrl,
@@ -49,7 +25,6 @@ function JsonLd() {
   }
 
   const organizationSchema = {
-    "@context": "https://schema.org",
     "@type": "Organization",
     name: "SAM - Sistema Automatizado de Monitoreo",
     alternateName: "SAM Global Technologies",
@@ -73,7 +48,6 @@ function JsonLd() {
   }
 
   const softwareSchema = {
-    "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     name: "SAM - Monitoreo Inteligente de Flotas",
     applicationCategory: "BusinessApplication",
@@ -102,7 +76,6 @@ function JsonLd() {
   }
 
   const faqSchema = {
-    "@context": "https://schema.org",
     "@type": "FAQPage",
     mainEntity: [
       {
@@ -149,7 +122,6 @@ function JsonLd() {
   }
 
   const breadcrumbSchema = {
-    "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
       {
@@ -161,29 +133,22 @@ function JsonLd() {
     ],
   }
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      websiteSchema,
+      organizationSchema,
+      softwareSchema,
+      faqSchema,
+      breadcrumbSchema,
+    ],
+  }
+
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
-    </>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+    />
   )
 }
 

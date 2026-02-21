@@ -52,9 +52,11 @@ export function Navbar() {
             <div className="relative">
               <Image
                 src="/images/image.jpeg"
-                alt="SAM - Sistema Automatizado de Monitoreo"
+                alt="SAM - Sistema Automatizado de Monitoreo, monitoreo inteligente de flotas"
                 width={52}
                 height={52}
+                sizes="52px"
+                priority
                 className="rounded-xl transition-transform duration-300 group-hover:scale-105"
               />
               {/* Subtle glow effect on hover */}

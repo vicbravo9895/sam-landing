@@ -1,11 +1,19 @@
 import type { Metadata } from "next"
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sammonitoreo.com"
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://samglobaltechnologies.com"
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Solicitar Demo",
   description:
     "Agenda una demo personalizada de SAM. Descubre cómo el monitoreo inteligente puede reducir las falsas alarmas de tu flota en un 80% y proteger a tus conductores.",
+  keywords: [
+    "demo SAM",
+    "solicitar demo monitoreo flotas",
+    "prueba SAM",
+    "monitoreo inteligente demo",
+    "Samsara integración",
+  ],
   alternates: {
     canonical: `${siteUrl}/demo`,
   },
@@ -54,6 +62,7 @@ export default function DemoLayout({
 }) {
   return (
     <>
+      <link rel="preconnect" href="https://challenges.cloudflare.com" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}

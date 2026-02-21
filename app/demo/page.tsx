@@ -166,9 +166,10 @@ export default function DemoPage() {
           <Link href="/" className="inline-flex items-center gap-3 hover:opacity-80 transition-opacity">
             <Image
               src="/images/image.jpeg"
-              alt="SAM Logo"
+              alt="SAM - Monitoreo Inteligente de Flotas, volver al inicio"
               width={36}
               height={36}
+              sizes="36px"
               className="rounded-lg"
             />
             <span className="font-semibold text-foreground">SAM</span>
@@ -359,7 +360,7 @@ export default function DemoPage() {
                 <>
                   <Script
                     src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
-                    strategy="afterInteractive"
+                    strategy="lazyOnload"
                     onLoad={() => setTurnstileReady(true)}
                   />
                   <div

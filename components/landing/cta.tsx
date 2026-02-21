@@ -44,9 +44,10 @@ export function CTA() {
                 <div className="flex items-center gap-3 mb-8">
                   <Image
                     src="/images/image.jpeg"
-                    alt="SAM Logo"
+                    alt="SAM - Monitoreo Inteligente de Flotas, logo"
                     width={44}
                     height={44}
+                    sizes="44px"
                     className="rounded-xl"
                   />
                 </div>

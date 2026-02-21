@@ -8,7 +8,7 @@ import "./globals.css"
 const geistSans = Geist({ subsets: ["latin"], display: "swap" })
 const geistMono = Geist_Mono({ subsets: ["latin"], display: "swap" })
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sammonitoreo.com"
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://samglobaltechnologies.com"
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     template: "%s | SAM - Monitoreo Inteligente de Flotas",
   },
   description:
-    "SAM analiza automaticamente las alertas de tu flota con inteligencia artificial. Filtra el ruido, detecta emergencias reales y te notifica solo cuando importa. Compatible con Samsara.",
+    "SAM analiza las alertas de tu flota con IA. Reduce falsas alarmas hasta 80%, detecta emergencias reales y te notifica solo cuando importa. Compatible con Samsara.",
   keywords: [
     "monitoreo de flotas",
     "monitoreo inteligente",
@@ -88,24 +88,32 @@ export const metadata: Metadata = {
   category: "technology",
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
+      { url: `${siteUrl}/favicon.ico`, sizes: "any" },
+      { url: `${siteUrl}/favicon.ico`, sizes: "48x48", type: "image/x-icon" },
       {
-        url: "/icon-light-32x32.png",
+        url: `${siteUrl}/icon-light-32x32.png`,
+        sizes: "32x32",
+        type: "image/png",
         media: "(prefers-color-scheme: light)",
       },
       {
-        url: "/icon-dark-32x32.png",
+        url: `${siteUrl}/icon-dark-32x32.png`,
+        sizes: "32x32",
+        type: "image/png",
         media: "(prefers-color-scheme: dark)",
       },
       {
-        url: "/icon.svg",
+        url: `${siteUrl}/icon.svg`,
         type: "image/svg+xml",
+        sizes: "any",
       },
     ],
-    shortcut: "/favicon.ico",
-    apple: "/apple-icon.png",
+    shortcut: `${siteUrl}/favicon.ico`,
+    apple: [
+      { url: `${siteUrl}/apple-icon.png`, sizes: "180x180", type: "image/png" },
+    ],
   },
-  manifest: "/manifest.json",
+  manifest: `${siteUrl}/manifest.json`,
 }
 
 export const viewport: Viewport = {
@@ -126,8 +134,9 @@ export default function RootLayout({
   return (
     <html lang="es" dir="ltr" suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="icon" href={`${siteUrl}/favicon.ico`} sizes="any" />
+        <link rel="icon" href={`${siteUrl}/icon.svg`} type="image/svg+xml" />
+        <link rel="apple-touch-icon" href={`${siteUrl}/apple-icon.png`} sizes="180x180" />
       </head>
       <body className={`${geistSans.className} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange={false}>

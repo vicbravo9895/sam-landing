@@ -30,9 +30,10 @@ export function Footer() {
             <div className="flex items-center gap-3 mb-6">
               <Image
                 src="/images/image.jpeg"
-                alt="SAM Logo"
+                alt="SAM - Sistema Automatizado de Monitoreo, logo"
                 width={36}
                 height={36}
+                sizes="36px"
                 className="rounded-lg"
               />
               <div>

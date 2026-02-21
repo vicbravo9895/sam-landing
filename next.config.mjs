@@ -1,7 +1,19 @@
+import bundleAnalyzer from "@next/bundle-analyzer"
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
+  },
+  compress: true,
+  poweredByHeader: false,
+  images: {
+    formats: ["image/avif", "image/webp"],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256],
+  },
+  experimental: {
+    optimizePackageImports: ["lucide-react"],
   },
   async headers() {
     return [
@@ -20,4 +32,9 @@ const nextConfig = {
   },
 }
 
-export default nextConfig
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+  openAnalyzer: false,
+})
+
+export default withBundleAnalyzer(nextConfig)
