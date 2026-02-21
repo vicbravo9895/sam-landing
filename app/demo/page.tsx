@@ -2,6 +2,7 @@
 
 import React from "react"
 import { useState } from "react"
+import Script from "next/script"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -17,6 +18,8 @@ import { ArrowLeft, ArrowRight, CheckCircle2, Shield, Zap, Clock } from "lucide-
 import Image from "next/image"
 import Link from "next/link"
 import { submitDeal } from "@/app/actions/deals"
+
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
 
 export default function DemoPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -221,7 +224,7 @@ export default function DemoPage() {
                   id="telefono"
                   name="phone"
                   type="tel" 
-                  placeholder="+52 8117658890" 
+                  placeholder="+52 55 1234 5678" 
                   required
                   className="bg-background"
                 />
@@ -291,6 +294,21 @@ export default function DemoPage() {
                   className="bg-background min-h-[100px] resize-none"
                 />
               </div>
+
+              {TURNSTILE_SITE_KEY && (
+                <>
+                  <Script
+                    src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+                    strategy="afterInteractive"
+                  />
+                  <div
+                    className="cf-turnstile flex justify-center [&_.cf-turnstile]:!block"
+                    data-sitekey={TURNSTILE_SITE_KEY}
+                    data-theme="light"
+                    aria-label="Verificación de seguridad"
+                  />
+                </>
+              )}
 
               {errorMsg && (
                 <p className="text-sm text-destructive text-center">{errorMsg}</p>

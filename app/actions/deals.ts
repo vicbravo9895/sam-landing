@@ -1,8 +1,17 @@
 "use server"
 
 import { processDeal, type DealResult } from "@/lib/deals"
+import { isTurnstileRequired, verifyTurnstileToken } from "@/lib/turnstile"
 
 export async function submitDeal(formData: FormData): Promise<DealResult> {
+  if (isTurnstileRequired()) {
+    const token = formData.get("cf-turnstile-response") as string | null
+    const verification = await verifyTurnstileToken(token)
+    if (!verification.success) {
+      return { success: false, error: verification.error }
+    }
+  }
+
   const data = {
     first_name: formData.get("first_name") as string,
     last_name: formData.get("last_name") as string,
