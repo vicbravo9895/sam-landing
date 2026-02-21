@@ -4,15 +4,24 @@
  */
 
 const SITEVERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify"
+// Secret de prueba: acepta tokens generados con la site key de prueba en localhost
+const TURNSTILE_TEST_SECRET = "1x0000000000000000000000000000000AA"
 
 export type TurnstileVerifyResult =
   | { success: true }
   | { success: false; error: string }
 
+function getSecretKey(): string | undefined {
+  const env = process.env.TURNSTILE_SECRET_KEY
+  if (env) return env
+  if (process.env.NODE_ENV === "development") return TURNSTILE_TEST_SECRET
+  return undefined
+}
+
 export async function verifyTurnstileToken(
   token: string | null
 ): Promise<TurnstileVerifyResult> {
-  const secret = process.env.TURNSTILE_SECRET_KEY
+  const secret = getSecretKey()
   if (!secret) {
     return { success: false, error: "Turnstile no configurado en el servidor" }
   }
@@ -50,7 +59,7 @@ export async function verifyTurnstileToken(
   }
 }
 
-/** Si está configurado el secret, Turnstile es obligatorio. */
+/** Si está configurado el secret (o estamos en dev con test key), Turnstile es obligatorio. */
 export function isTurnstileRequired(): boolean {
-  return Boolean(process.env.TURNSTILE_SECRET_KEY)
+  return Boolean(getSecretKey())
 }

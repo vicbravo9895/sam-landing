@@ -1,7 +1,6 @@
 "use client"
 
-import React from "react"
-import { useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import Script from "next/script"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -20,6 +19,28 @@ import Link from "next/link"
 import { submitDeal } from "@/app/actions/deals"
 
 const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY
+// Claves de prueba de Cloudflare: funcionan en localhost sin configurar dominios (evitan error 110200)
+const TURNSTILE_TEST_SITE_KEY = "1x00000000000000000000AA"
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (
+        container: string | HTMLElement,
+        options: {
+          sitekey: string
+          theme?: "light" | "dark" | "auto"
+          size?: "normal" | "compact" | "flexible"
+          callback?: (token: string) => void
+          "error-callback"?: (errorCode: string) => void
+          "expired-callback"?: () => void
+        }
+      ) => string
+      remove: (widgetId: string) => void
+      getResponse: (widgetId: string) => string
+    }
+  }
+}
 
 export default function DemoPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -27,6 +48,45 @@ export default function DemoPage() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
   const [fleetSize, setFleetSize] = useState("")
   const [country, setCountry] = useState("")
+  const [turnstileReady, setTurnstileReady] = useState(false)
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
+  const [effectiveSiteKey, setEffectiveSiteKey] = useState<string | null>(null)
+  const turnstileWidgetId = useRef<string | null>(null)
+  const turnstileContainerRef = useRef<HTMLDivElement>(null)
+  const turnstileRenderedRef = useRef(false)
+
+  // En localhost usamos la site key de prueba para evitar error 110200 (dominio no autorizado)
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    setEffectiveSiteKey(isLocal ? TURNSTILE_TEST_SITE_KEY : (TURNSTILE_SITE_KEY || ""))
+  }, [])
+
+  useEffect(() => {
+    if (!turnstileReady || !effectiveSiteKey || !turnstileContainerRef.current || !window.turnstile || turnstileRenderedRef.current) return
+    const container = turnstileContainerRef.current
+    turnstileRenderedRef.current = true
+    turnstileWidgetId.current = window.turnstile.render(container, {
+      sitekey: effectiveSiteKey,
+      theme: "light",
+      size: "normal",
+      callback: (token) => setTurnstileToken(token),
+      "error-callback": () => setTurnstileToken(null),
+      "expired-callback": () => setTurnstileToken(null),
+    })
+    return () => {
+      turnstileRenderedRef.current = false
+      if (turnstileWidgetId.current != null && window.turnstile) {
+        try {
+          window.turnstile.remove(turnstileWidgetId.current)
+        } catch {
+          // ignore if already removed
+        }
+        turnstileWidgetId.current = null
+      }
+      setTurnstileToken(null)
+    }
+  }, [turnstileReady, effectiveSiteKey])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -295,18 +355,21 @@ export default function DemoPage() {
                 />
               </div>
 
-              {TURNSTILE_SITE_KEY && (
+              {effectiveSiteKey && (
                 <>
                   <Script
-                    src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+                    src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
                     strategy="afterInteractive"
+                    onLoad={() => setTurnstileReady(true)}
                   />
                   <div
-                    className="cf-turnstile flex justify-center [&_.cf-turnstile]:!block"
-                    data-sitekey={TURNSTILE_SITE_KEY}
-                    data-theme="light"
-                    aria-label="Verificación de seguridad"
+                    ref={turnstileContainerRef}
+                    className="flex justify-center min-h-[65px] items-center"
+                    aria-label="Verificación de seguridad Cloudflare Turnstile"
                   />
+                  {turnstileToken && (
+                    <input type="hidden" name="cf-turnstile-response" value={turnstileToken} readOnly />
+                  )}
                 </>
               )}
 
