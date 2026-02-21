@@ -1,20 +1,30 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useTheme } from "next-themes"
 import { Button } from "@/components/ui/button"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Sun, Moon } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const { theme, setTheme, resolvedTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const isDark = mounted && (resolvedTheme === "dark" || theme === "dark")
+  const toggleTheme = () => setTheme(isDark ? "light" : "dark")
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20)
     }
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
@@ -27,14 +37,16 @@ export function Navbar() {
 
   return (
     <nav 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      role="navigation"
+      aria-label="Navegación principal"
+      className={`fixed top-4 left-4 right-4 z-50 mx-auto max-w-7xl rounded-2xl transition-[background-color,box-shadow,border-color] duration-200 ${
         scrolled 
-          ? "bg-background/95 backdrop-blur-xl shadow-sm border-b border-border/50" 
+          ? "bg-background/95 backdrop-blur-xl shadow-lg border border-border/50 shadow-black/5" 
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+      <div className="px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
           {/* Logo con más presencia */}
           <Link href="/" className="flex items-center gap-1 group">
             <div className="relative">
@@ -56,36 +68,54 @@ export function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm text-muted-foreground hover:text-foreground hover:bg-background/80 transition-all px-4 py-2 rounded-full"
+                className="cursor-pointer text-sm text-muted-foreground hover:text-foreground hover:bg-background/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:rounded-full transition-colors duration-200 px-4 py-2 rounded-full min-h-[44px] min-w-[44px] inline-flex items-center justify-center"
               >
                 {link.label}
               </a>
             ))}
           </div>
 
-          {/* CTA Buttons */}
-          <div className="hidden md:flex items-center gap-3">
+          {/* Theme toggle + CTA Buttons */}
+          <div className="hidden md:flex items-center gap-2">
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="min-h-[44px] min-w-[44px] rounded-full flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/60 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 transition-colors duration-200 cursor-pointer"
+              aria-label={isDark ? "Cambiar a tema claro" : "Cambiar a tema oscuro"}
+              title={isDark ? "Tema claro" : "Tema oscuro"}
+            >
+              {mounted ? (
+                isDark ? (
+                  <Sun className="h-5 w-5" aria-hidden />
+                ) : (
+                  <Moon className="h-5 w-5" aria-hidden />
+                )
+              ) : (
+                <span className="h-5 w-5 rounded-full bg-muted" aria-hidden />
+              )}
+            </button>
             <Link href="https://cloud.samglobaltechnologies.com">
-              <Button size="sm" className="bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:opacity-90 transition-all hover:shadow-lg hover:shadow-primary/25 px-5">
+              <Button size="sm" className="bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:opacity-90 transition-colors duration-200 hover:shadow-lg hover:shadow-primary/25 px-5">
                 Iniciar Sesión
               </Button>
             </Link>
             <Link href="/demo">
               <Button 
                 size="sm" 
-                className="bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:opacity-90 transition-all hover:shadow-lg hover:shadow-primary/25 px-5"
+                className="bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:opacity-90 transition-colors duration-200 hover:shadow-lg hover:shadow-primary/25 px-5"
               >
                 Solicitar Demo
               </Button>
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button - 44px touch target */}
           <button
             type="button"
-            className="md:hidden p-2.5 text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-xl transition-colors"
+            className="md:hidden p-3 min-h-[44px] min-w-[44px] text-muted-foreground hover:text-foreground hover:bg-muted/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-xl transition-colors duration-200 cursor-pointer inline-flex items-center justify-center"
             onClick={() => setIsOpen(!isOpen)}
             aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={isOpen}
           >
             {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -93,25 +123,39 @@ export function Navbar() {
 
         {/* Mobile Navigation */}
         <div 
-          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+          className={`md:hidden overflow-hidden transition-[max-height,opacity] duration-300 ease-in-out ${
             isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
           }`}
         >
-          <div className="py-4 space-y-1 bg-background">
+          <div className="py-4 space-y-1 bg-background rounded-b-2xl">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="block text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all px-4 py-3 rounded-xl"
+                className="cursor-pointer block text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset transition-colors duration-200 px-4 py-3 rounded-xl min-h-[44px] flex items-center"
                 onClick={() => setIsOpen(false)}
               >
                 {link.label}
               </a>
             ))}
             <div className="flex flex-col gap-2 pt-4 mt-4 border-t border-border/50">
-              <Button variant="ghost" size="sm" className="justify-start h-11">
-                Iniciar Sesión
-              </Button>
+              <button
+                type="button"
+                onClick={() => {
+                  toggleTheme()
+                  setIsOpen(false)
+                }}
+                className="w-full flex items-center gap-3 px-4 py-3 min-h-[44px] rounded-xl text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors duration-200 cursor-pointer"
+                aria-label={isDark ? "Cambiar a tema claro" : "Cambiar a tema oscuro"}
+              >
+                {mounted ? (isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />) : <span className="h-5 w-5 rounded-full bg-muted" />}
+                <span>{isDark ? "Tema claro" : "Tema oscuro"}</span>
+              </button>
+              <Link href="https://cloud.samglobaltechnologies.com" onClick={() => setIsOpen(false)}>
+                <Button variant="ghost" size="sm" className="w-full justify-start h-11 min-h-[44px] cursor-pointer">
+                  Iniciar Sesión
+                </Button>
+              </Link>
               <Link href="/demo" onClick={() => setIsOpen(false)}>
                 <Button 
                   size="sm" 

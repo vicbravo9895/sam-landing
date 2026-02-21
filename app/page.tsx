@@ -1,13 +1,36 @@
+import dynamic from "next/dynamic"
 import { Navbar } from "@/components/landing/navbar"
 import { Hero } from "@/components/landing/hero"
-import { ProblemSolution } from "@/components/landing/problem-solution"
-import { Features } from "@/components/landing/features"
-import { HowItWorks } from "@/components/landing/how-it-works"
-import { Benefits } from "@/components/landing/benefits"
-import { UseCases } from "@/components/landing/use-cases"
-import { ForWho } from "@/components/landing/for-who"
-import { CTA } from "@/components/landing/cta"
 import { Footer } from "@/components/landing/footer"
+
+const ProblemSolution = dynamic(
+  () => import("@/components/landing/problem-solution").then((m) => ({ default: m.ProblemSolution })),
+  { ssr: true }
+)
+const Features = dynamic(
+  () => import("@/components/landing/features").then((m) => ({ default: m.Features })),
+  { ssr: true }
+)
+const HowItWorks = dynamic(
+  () => import("@/components/landing/how-it-works").then((m) => ({ default: m.HowItWorks })),
+  { ssr: true }
+)
+const Benefits = dynamic(
+  () => import("@/components/landing/benefits").then((m) => ({ default: m.Benefits })),
+  { ssr: true }
+)
+const UseCases = dynamic(
+  () => import("@/components/landing/use-cases").then((m) => ({ default: m.UseCases })),
+  { ssr: true }
+)
+const ForWho = dynamic(
+  () => import("@/components/landing/for-who").then((m) => ({ default: m.ForWho })),
+  { ssr: true }
+)
+const CTA = dynamic(
+  () => import("@/components/landing/cta").then((m) => ({ default: m.CTA })),
+  { ssr: true }
+)
 
 function JsonLd() {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sammonitoreo.com"
@@ -168,8 +191,14 @@ export default function Home() {
   return (
     <>
       <JsonLd />
+      <a
+        href="#main-content"
+        className="absolute -left-[9999px] focus:left-4 focus:top-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-lg focus:outline-none focus:ring-2 focus:ring-ring focus:border-0"
+      >
+        Saltar al contenido
+      </a>
       <Navbar />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <Hero />
         <ProblemSolution />
         <Features />

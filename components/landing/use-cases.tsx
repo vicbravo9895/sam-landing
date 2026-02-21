@@ -83,7 +83,7 @@ export function UseCases() {
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background via-muted/20 to-background" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className={`text-center max-w-2xl mx-auto mb-20 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+        <div className={`text-center max-w-2xl mx-auto mb-20 transition-[opacity,transform] duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
           <p className="text-sm font-medium text-primary tracking-widest uppercase">Ejemplos reales</p>
           <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground tracking-tight text-balance">
             Asi responde SAM en cada situacion
@@ -94,19 +94,21 @@ export function UseCases() {
         </div>
 
         {/* Tab navigation */}
-        <div className={`flex flex-wrap justify-center gap-3 mb-12 transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+        <div className={`flex flex-wrap justify-center gap-3 mb-12 transition-[opacity,transform] duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
           {cases.map((c, index) => (
             <button
               key={c.title}
               type="button"
               onClick={() => setActiveCase(index)}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+              aria-pressed={activeCase === index}
+              aria-label={`Ver caso: ${c.badge}`}
+              className={`cursor-pointer flex items-center gap-2 px-5 py-2.5 min-h-[44px] rounded-full text-sm font-medium transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${
                 activeCase === index
                   ? "bg-foreground text-background shadow-lg"
                   : "bg-card border border-border/50 text-muted-foreground hover:text-foreground hover:border-border"
               }`}
             >
-              <c.icon className="w-4 h-4" />
+              <c.icon className="w-4 h-4" aria-hidden />
               {c.badge}
             </button>
           ))}
@@ -116,7 +118,7 @@ export function UseCases() {
         {cases.map((useCase, index) => (
           <div
             key={useCase.title}
-            className={`transition-all duration-500 ${
+            className={`transition-[opacity,transform] duration-500 ${
               activeCase === index
                 ? "opacity-100 translate-y-0 block"
                 : "opacity-0 translate-y-4 hidden"

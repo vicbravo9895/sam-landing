@@ -54,7 +54,7 @@ export function ForWho() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           {/* Left text */}
-          <div className={`transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div className={`transition-[opacity,transform] duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <p className="text-sm font-medium text-primary tracking-widest uppercase">Para quien es SAM</p>
             <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground tracking-tight text-balance">
               Si tienes una flota y usas Samsara, SAM es para ti.
@@ -69,7 +69,7 @@ export function ForWho() {
             {audiences.map((audience, index) => (
               <div
                 key={audience.title}
-                className={`group relative rounded-2xl p-6 border border-border/40 bg-card hover:bg-card/80 hover:shadow-lg hover:shadow-primary/[0.04] hover:-translate-y-1 transition-all duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                className={`group relative rounded-2xl p-6 border border-border/40 bg-card hover:bg-card/80 hover:shadow-lg hover:shadow-primary/[0.04] hover:-translate-y-1 transition-[opacity,transform,box-shadow,background-color] duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                 style={{ transitionDelay: `${200 + index * 100}ms` }}
               >
                 <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${audience.accent} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>

@@ -40,7 +40,7 @@ export function HowItWorks() {
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background via-muted/30 to-background" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className={`text-center max-w-2xl mx-auto mb-20 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+        <div className={`text-center max-w-2xl mx-auto mb-20 transition-[opacity,transform] duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
           <p className="text-sm font-medium text-primary tracking-widest uppercase">Como funciona</p>
           <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground tracking-tight text-balance">
             Simple. Automatico. Efectivo.
@@ -56,7 +56,7 @@ export function HowItWorks() {
             {steps.map((step, index) => (
               <div
                 key={step.title}
-                className={`relative text-center transition-all duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+                className={`relative text-center transition-[opacity,transform,background-color,border-color,box-shadow] duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
                 style={{ transitionDelay: `${index * 120}ms` }}
               >
                 {/* Connector line */}
@@ -67,7 +67,7 @@ export function HowItWorks() {
                 )}
 
                 {/* Icon */}
-                <div className={`relative z-10 w-16 h-16 mx-auto rounded-2xl flex items-center justify-center transition-all duration-500 ${
+                <div className={`relative z-10 w-16 h-16 mx-auto rounded-2xl flex items-center justify-center transition-[opacity,transform,background-color,border-color,box-shadow] duration-500 ${
                   activeStep === index
                     ? "bg-gradient-to-br from-primary to-secondary shadow-lg shadow-primary/20 scale-110"
                     : activeStep > index
@@ -80,7 +80,7 @@ export function HowItWorks() {
                 </div>
 
                 {/* Step number */}
-                <div className={`mt-4 inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold transition-all duration-500 ${
+                <div className={`mt-4 inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold transition-[opacity,transform,background-color,border-color,box-shadow] duration-500 ${
                   activeStep >= index ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"
                 }`}>
                   {index + 1}
@@ -98,7 +98,7 @@ export function HowItWorks() {
           {steps.map((step, index) => (
             <div
               key={step.title}
-              className={`flex items-start gap-5 transition-all duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+              className={`flex items-start gap-5 transition-[opacity,transform,background-color,border-color,box-shadow] duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
               style={{ transitionDelay: `${index * 100}ms` }}
             >
               <div className="flex flex-col items-center">

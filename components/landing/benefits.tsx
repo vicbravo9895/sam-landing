@@ -55,7 +55,7 @@ export function Benefits() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className={`text-center max-w-2xl mx-auto mb-20 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+        <div className={`text-center max-w-2xl mx-auto mb-20 transition-[opacity,transform] duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
           <p className="text-sm font-medium text-primary tracking-widest uppercase">Resultados</p>
           <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground tracking-tight text-balance">
             Lo vas a notar desde el primer dia
@@ -67,14 +67,14 @@ export function Benefits() {
           {stats.map((stat, index) => (
             <div
               key={stat.label}
-              className={`group relative text-center rounded-2xl p-8 border border-border/40 bg-card hover:bg-card/80 hover:shadow-lg hover:shadow-primary/[0.04] hover:-translate-y-1 transition-all duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+              className={`group relative text-center rounded-2xl p-8 border border-border/40 bg-card hover:bg-card/80 hover:shadow-lg hover:shadow-primary/[0.04] hover:-translate-y-1 transition-[opacity,transform,box-shadow,background-color] duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
               style={{ transitionDelay: `${index * 80}ms` }}
             >
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/8 to-secondary/8 flex items-center justify-center mx-auto mb-5 group-hover:from-primary/15 group-hover:to-secondary/15 group-hover:scale-110 transition-all duration-300">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/8 to-secondary/8 flex items-center justify-center mx-auto mb-5 group-hover:from-primary/15 group-hover:to-secondary/15 group-hover:scale-110 transition-[transform,background-color] duration-300">
                 <stat.icon className="w-6 h-6 text-primary" />
               </div>
 
-              <div className={`text-4xl sm:text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2 transition-all duration-700 ${countStarted ? "opacity-100 scale-100" : "opacity-0 scale-90"}`} style={{ transitionDelay: `${index * 100}ms` }}>
+              <div className={`text-4xl sm:text-5xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2 transition-[opacity,transform] duration-700 ${countStarted ? "opacity-100 scale-100" : "opacity-0 scale-90"}`} style={{ transitionDelay: `${index * 100}ms` }}>
                 {stat.value}
               </div>
               <h3 className="text-sm font-semibold text-foreground tracking-tight">{stat.label}</h3>
@@ -84,7 +84,7 @@ export function Benefits() {
         </div>
 
         {/* Comparison */}
-        <div className={`transition-all duration-700 delay-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+        <div className={`transition-[opacity,transform] duration-700 delay-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
           <div className="text-center mb-12">
             <h3 className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">El antes y despues</h3>
           </div>
@@ -99,7 +99,7 @@ export function Benefits() {
               </div>
               <ul className="space-y-5">
                 {withoutSam.map((item, i) => (
-                  <li key={item} className={`flex items-start gap-3 transition-all duration-500 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`} style={{ transitionDelay: `${600 + i * 80}ms` }}>
+                  <li key={item} className={`flex items-start gap-3 transition-[opacity,transform,box-shadow,background-color] duration-500 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`} style={{ transitionDelay: `${600 + i * 80}ms` }}>
                     <div className="w-1.5 h-1.5 rounded-full bg-destructive/40 mt-2 shrink-0" />
                     <span className="text-muted-foreground leading-relaxed">{item}</span>
                   </li>
@@ -107,7 +107,7 @@ export function Benefits() {
               </ul>
             </div>
 
-            <div className="rounded-2xl border border-primary/15 p-8 lg:p-10 bg-gradient-to-br from-primary/[0.03] to-secondary/[0.03] hover:shadow-lg hover:shadow-primary/[0.04] transition-all duration-300">
+            <div className="rounded-2xl border border-primary/15 p-8 lg:p-10 bg-gradient-to-br from-primary/[0.03] to-secondary/[0.03] hover:shadow-lg hover:shadow-primary/[0.04] transition-[transform,background-color] duration-300">
               <div className="flex items-center gap-3 mb-8">
                 <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                   <CheckCircle2 className="w-4 h-4 text-primary" />
@@ -116,7 +116,7 @@ export function Benefits() {
               </div>
               <ul className="space-y-5">
                 {withSam.map((item, i) => (
-                  <li key={item} className={`flex items-start gap-3 transition-all duration-500 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4"}`} style={{ transitionDelay: `${600 + i * 80}ms` }}>
+                  <li key={item} className={`flex items-start gap-3 transition-[opacity,transform,box-shadow,background-color] duration-500 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4"}`} style={{ transitionDelay: `${600 + i * 80}ms` }}>
                     <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
                     <span className="text-foreground leading-relaxed">{item}</span>
                   </li>

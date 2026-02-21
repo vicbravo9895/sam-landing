@@ -45,13 +45,13 @@ export function Footer() {
             </p>
 
             <div className="mt-8 space-y-3">
-              <a href="mailto:contacto@samglobaltechnologies.com" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors">
-                <Mail className="w-4 h-4" />
+              <a href="mailto:contacto@samglobaltechnologies.com" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md outline-none min-h-[44px] items-center">
+                <Mail className="w-4 h-4 shrink-0" />
                 contacto@samglobaltechnologies.com
               </a>
-              <a href="tel:+521234567890" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors">
-                <Phone className="w-4 h-4" />
-                +52 (123) 456-7890
+              <a href="tel:+528112345678" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-md outline-none min-h-[44px] items-center">
+                <Phone className="w-4 h-4 shrink-0" />
+                +52 81 1765 8890
               </a>
               <p className="flex items-center gap-3 text-sm text-muted-foreground">
                 <MapPin className="w-4 h-4" />
@@ -66,7 +66,7 @@ export function Footer() {
             <ul className="space-y-3">
               {links.producto.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  <a href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded py-1 inline-block min-h-[44px] leading-[44px]">
                     {link.label}
                   </a>
                 </li>
@@ -80,7 +80,7 @@ export function Footer() {
             <ul className="space-y-3">
               {links.empresa.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  <a href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded py-1 inline-block min-h-[44px] leading-[44px]">
                     {link.label}
                   </a>
                 </li>
@@ -94,7 +94,7 @@ export function Footer() {
             <ul className="space-y-3">
               {links.legal.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  <a href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded py-1 inline-block min-h-[44px] leading-[44px]">
                     {link.label}
                   </a>
                 </li>

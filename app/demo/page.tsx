@@ -221,7 +221,7 @@ export default function DemoPage() {
                   id="telefono"
                   name="phone"
                   type="tel" 
-                  placeholder="+52 55 1234 5678" 
+                  placeholder="+52 8117658890" 
                   required
                   className="bg-background"
                 />
@@ -299,13 +299,13 @@ export default function DemoPage() {
               <Button 
                 type="submit" 
                 size="lg" 
-                className="w-full bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:opacity-90 transition-all gap-2"
+                className="w-full bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:opacity-90 transition-colors duration-200 gap-2"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
                   <>
                     <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    Enviando...
+                    Enviando…
                   </>
                 ) : (
                   <>

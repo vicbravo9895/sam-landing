@@ -31,7 +31,7 @@ export function CTA() {
   return (
     <section ref={sectionRef} id="cta" aria-label="Solicitar una demo" className="py-24 lg:py-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className={`relative rounded-[2rem] overflow-hidden transition-all duration-700 ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
+        <div className={`relative rounded-[2rem] overflow-hidden transition-[opacity,transform] duration-700 ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
           {/* Background */}
           <div className="absolute inset-0 bg-gradient-to-br from-[hsl(210,30%,12%)] via-[hsl(200,25%,15%)] to-[hsl(190,20%,18%)]" />
           <div className="absolute inset-0 opacity-[0.04]">
@@ -63,7 +63,7 @@ export function CTA() {
                   {benefits.map((benefit, index) => (
                     <li
                       key={benefit}
-                      className={`flex items-center gap-3 text-white/70 transition-all duration-500 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}
+                      className={`flex items-center gap-3 text-white/70 transition-[opacity,transform] duration-500 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}
                       style={{ transitionDelay: `${300 + index * 80}ms` }}
                     >
                       <CheckCircle2 className="w-4 h-4 text-secondary shrink-0" />
@@ -73,14 +73,14 @@ export function CTA() {
                 </ul>
 
                 <div className="mt-12 flex flex-col sm:flex-row gap-4">
-                  <Link href="/demo">
-                    <Button size="lg" className="bg-white text-foreground hover:bg-white/90 gap-2 px-8 hover:scale-[1.02] transition-all font-semibold">
+                  <Link href="/demo" className="cursor-pointer">
+                    <Button size="lg" className="bg-white text-foreground hover:bg-white/90 gap-2 px-8 min-h-[48px] hover:scale-[1.02] transition-colors duration-200 font-semibold cursor-pointer">
                       Solicitar Demo
                       <ArrowRight className="w-4 h-4" />
                     </Button>
                   </Link>
-                  <Link href="/demo">
-                    <Button size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 bg-transparent">
+                  <Link href="/demo" className="cursor-pointer">
+                    <Button size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 bg-transparent min-h-[48px] transition-colors duration-200 cursor-pointer">
                       Hablar con Ventas
                     </Button>
                   </Link>
@@ -98,7 +98,7 @@ export function CTA() {
                   ].map((stat, index) => (
                     <div
                       key={stat.label}
-                      className={`rounded-2xl p-8 border border-white/[0.08] bg-white/[0.04] backdrop-blur-sm hover:bg-white/[0.07] transition-all duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+                      className={`rounded-2xl p-8 border border-white/[0.08] bg-white/[0.04] backdrop-blur-sm hover:bg-white/[0.07] transition-[opacity,transform] duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
                       style={{ transitionDelay: `${400 + index * 100}ms` }}
                     >
                       <div className="text-4xl font-bold text-white tracking-tight">{stat.value}</div>

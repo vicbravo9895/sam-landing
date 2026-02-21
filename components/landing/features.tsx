@@ -1,22 +1,16 @@
 "use client"
 
 import { Sparkles, Smartphone, LayoutDashboard, MessageSquare, Eye, Clock, Phone, Camera } from "lucide-react"
-import { useEffect, useRef, useState } from "react"
+import { motion, useInView, useReducedMotion } from "framer-motion"
+import { useRef } from "react"
+
+const fadeUp = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }
+const transition = { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }
 
 export function Features() {
-  const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true)
-      },
-      { threshold: 0.1 }
-    )
-    if (sectionRef.current) observer.observe(sectionRef.current)
-    return () => observer.disconnect()
-  }, [])
+  const inView = useInView(sectionRef, { once: true, amount: 0.08, margin: "-60px 0px" })
+  const reduced = useReducedMotion()
 
   const features = [
     {
@@ -76,35 +70,48 @@ export function Features() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className={`text-center max-w-2xl mx-auto mb-20 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+        <motion.div
+          className="text-center max-w-2xl mx-auto mb-20"
+          initial="hidden"
+          animate={reduced ? "visible" : inView ? "visible" : "hidden"}
+          variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }}
+          transition={transition}
+        >
           <p className="text-sm font-medium text-primary tracking-widest uppercase">Funcionalidades</p>
           <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground tracking-tight text-balance">
             Todo lo que necesitas para proteger tu flota
           </h2>
           <p className="mt-6 text-lg text-muted-foreground text-pretty leading-relaxed">
-            Desde que llega la alerta hasta que la persona correcta tiene la informacion para actuar.
+            Desde que llega la alerta hasta que la persona correcta tiene la información para actuar.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {features.map((feature, index) => (
-            <div
+        <motion.div
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4"
+          initial="hidden"
+          animate={reduced ? "visible" : inView ? "visible" : "hidden"}
+          variants={{
+            visible: {
+              transition: { staggerChildren: reduced ? 0 : 0.06, delayChildren: reduced ? 0 : 0.12 },
+            },
+          }}
+        >
+          {features.map((feature) => (
+            <motion.div
               key={feature.title}
-              className={`group relative rounded-2xl p-6 border border-border/40 bg-card hover:bg-card/80 transition-all duration-500 hover:shadow-lg hover:shadow-primary/[0.04] hover:-translate-y-1 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-              style={{ transitionDelay: `${index * 60}ms` }}
+              variants={fadeUp}
+              transition={transition}
+              className="group relative rounded-2xl p-6 border border-border/40 bg-card hover:bg-card/80 transition-[transform,box-shadow,background-color] duration-200 hover:shadow-lg hover:shadow-primary/[0.04] hover:-translate-y-1 cursor-default"
             >
-              {/* Top accent line */}
-              <div className={`absolute top-0 left-6 right-6 h-px bg-gradient-to-r ${feature.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
-              
+              <div className={`absolute top-0 left-6 right-6 h-px bg-gradient-to-r ${feature.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} aria-hidden />
               <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${feature.accent} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}>
-                <feature.icon className="w-5 h-5 text-primary-foreground" />
+                <feature.icon className="w-5 h-5 text-primary-foreground" aria-hidden />
               </div>
-
               <h3 className="text-base font-semibold text-foreground mb-2 tracking-tight">{feature.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )
