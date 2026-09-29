@@ -41,6 +41,9 @@ export const metadata: Metadata = {
   authors: [{ name: "SAM Global Technologies" }],
   creator: "SAM Global Technologies",
   publisher: "SAM Global Technologies",
+  other: {
+    "facebook-domain-verification": "qs8kefjv2bpthy9329nkvg0lmf6pfs",
+  },
   robots: {
     index: true,
     follow: true,
